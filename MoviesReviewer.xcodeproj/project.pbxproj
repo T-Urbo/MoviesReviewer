@@ -13,6 +13,9 @@
 		C25FD9A5280B6D3800100B8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C25FD9A3280B6D3800100B8A /* Main.storyboard */; };
 		C25FD9A7280B6D3C00100B8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25FD9A6280B6D3C00100B8A /* Assets.xcassets */; };
 		C25FD9AA280B6D3C00100B8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C25FD9A8280B6D3C00100B8A /* LaunchScreen.storyboard */; };
+		C25FD9B4280B701A00100B8A /* duneposter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C25FD9B3280B701A00100B8A /* duneposter.jpeg */; };
+		C25FD9B7280CD2C600100B8A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25FD9B6280CD2C600100B8A /* Movie.swift */; };
+		C25FD9BC280CD64900100B8A /* MovieServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25FD9BB280CD64900100B8A /* MovieServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		C25FD9A6280B6D3C00100B8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C25FD9A9280B6D3C00100B8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C25FD9AB280B6D3C00100B8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C25FD9B3280B701A00100B8A /* duneposter.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = duneposter.jpeg; path = MoviesReviewer/Resources/duneposter.jpeg; sourceTree = SOURCE_ROOT; };
+		C25FD9B6280CD2C600100B8A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		C25FD9BB280CD64900100B8A /* MovieServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,9 @@
 		C25FD99C280B6D3800100B8A /* MoviesReviewer */ = {
 			isa = PBXGroup;
 			children = (
+				C25FD9BA280CD62F00100B8A /* Services */,
+				C25FD9B9280CD43400100B8A /* Models */,
+				C25FD9B2280B700500100B8A /* Materials */,
 				C25FD99D280B6D3800100B8A /* AppDelegate.swift */,
 				C25FD99F280B6D3800100B8A /* SceneDelegate.swift */,
 				C25FD9A1280B6D3800100B8A /* ViewController.swift */,
@@ -65,6 +74,30 @@
 				C25FD9AB280B6D3C00100B8A /* Info.plist */,
 			);
 			path = MoviesReviewer;
+			sourceTree = "<group>";
+		};
+		C25FD9B2280B700500100B8A /* Materials */ = {
+			isa = PBXGroup;
+			children = (
+				C25FD9B3280B701A00100B8A /* duneposter.jpeg */,
+			);
+			path = Materials;
+			sourceTree = "<group>";
+		};
+		C25FD9B9280CD43400100B8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C25FD9B6280CD2C600100B8A /* Movie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C25FD9BA280CD62F00100B8A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C25FD9BB280CD64900100B8A /* MovieServices.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C25FD9B4280B701A00100B8A /* duneposter.jpeg in Resources */,
 				C25FD9AA280B6D3C00100B8A /* LaunchScreen.storyboard in Resources */,
 				C25FD9A7280B6D3C00100B8A /* Assets.xcassets in Resources */,
 				C25FD9A5280B6D3800100B8A /* Main.storyboard in Resources */,
@@ -137,7 +171,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C25FD9B7280CD2C600100B8A /* Movie.swift in Sources */,
 				C25FD9A2280B6D3800100B8A /* ViewController.swift in Sources */,
+				C25FD9BC280CD64900100B8A /* MovieServices.swift in Sources */,
 				C25FD99E280B6D3800100B8A /* AppDelegate.swift in Sources */,
 				C25FD9A0280B6D3800100B8A /* SceneDelegate.swift in Sources */,
 			);
