@@ -18,19 +18,19 @@ struct MovieResponce: Decodable {
     
 }
 
-struct Response: Decodable {
-    let searchType: String
-    let expression: String
-    let results: [Results]
-    let errorMessage: String
+struct Response: Codable {
+    var searchType: String = ""
+    var expression: String = ""
+    var results: [Results] = []
+    var errorMessage: String = ""
 }
 
-struct Results: Decodable {
-    let id: String
-    let resultType: String
-    let image: URL
-    let title: String
-    let description: String
+struct Results: Codable {
+    var id: String = ""
+    var resultType: String = ""
+    var image: String = ""
+    var title: String = ""
+    var description: String = ""
 }
 
 /*
