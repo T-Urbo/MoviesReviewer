@@ -5,6 +5,10 @@
 //  Created by Timothey Urbanovich on 22/04/2022.
 //
 
+// TODO: Make Sorting Option for the search bar
+// TODO: Add like and dislike buttons
+
+
 import UIKit
 import Foundation
 
@@ -12,17 +16,8 @@ class MoviePageViewController: UIViewController, SendDataToMoviePageVC {
     func sendData() {
         print("")
     }
-    
-    func sendData(image: UIImage?, text: String?) {
-        movieNameLabel.text = text
-    }
-    
-//    var sendDelegate: SendDataToMoviePageVC?
-    
-//
-//    @IBOutlet weak var moviePoster: UIImageView!
-    @IBOutlet weak var movieNameLabel: UILabel!
-    @IBOutlet weak var moviePoster: UIImageView!
+
+    @IBOutlet weak var moviePageBackground: UIImageView!
     
     var movieName: String = ""
     var imageURL: String = ""
@@ -30,11 +25,26 @@ class MoviePageViewController: UIViewController, SendDataToMoviePageVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        movieNameLabel.text = movieName
-        moviePoster.kf.setImage(with: URL(string: imageURL))
+        configureMoviePage()
         
     }
     
-    
+    func configureMoviePage() {
+        self.title = movieName
+        moviePageBackground.kf.setImage(with: URL(string: imageURL))
+        self.view.sendSubviewToBack(moviePageBackground)
+        moviePageBackground.addOverlay()
+    }
+}
+
+extension UIView {
+    func addOverlay(color: UIColor = .black, alpha : CGFloat = 0.6) {
+        let overlay = UIView()
+        overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        overlay.frame = bounds
+        overlay.backgroundColor = color
+        overlay.alpha = alpha
+        addSubview(overlay)
+    }
 }
 

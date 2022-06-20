@@ -5,152 +5,148 @@
 //  Created by Timothey Urbanovich on 27/05/2022.
 //
 
-// MARK: Make Results for %result% text label on the top of screen
+// MARK: Make Results for %result% text label on the top of screen -> DONE!
+// TODO: Make refresh with pull gesture
+// TODO: Make all posters same size inside of table view cell
+
 
 
 import UIKit
 import Foundation
 
-class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     var numberOfRowsInSection: Int = 0
-    var imdbAPIKey: String = "k_rae8rk7s"
-    var movieName: String = ""
+    var apiKey: String = "f88b8a75"
+    var keyWord: String = ""
     
-    var movieSearchResponse = Response()
     var imagesURLArray: [String] = [""]
     var titlesArray: [String] = [""]
     var descriptionsArray: [String] = [""]
-    
+    var moviesArray = [Movie]()
     
     @IBOutlet weak var tableView: UITableView!
+    var scrollView: UIScrollView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ArraysTest:")
-        for images in imagesURLArray {
-            print(images)
-        }
-
+        
         tableView.delegate = self
         tableView.dataSource = self
+        configureScreen()
         
-        print(numberOfRowsInSection)
-        var searchMovieURL =  "https://imdb-api.com/en/API/SearchMovie/\(imdbAPIKey)/\(movieName)"
+        let searchMovieURL =  "https://www.omdbapi.com/?apikey=\(apiKey)&s=\(keyWord)&type=movie"
+        print(searchMovieURL)
         getData(url: searchMovieURL)
     }
     
     
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfRowsInSection
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        if(!indexPath.isEmpty) {
-//            if !imagesURLArray[indexPath.row].isEmpty {
-//                cell.imageView?.kf.setImage(with: URL(string: imagesURLArray[indexPath.row]))
-//            }
-            
-            cell.imageView?.layer.cornerRadius = 10
-
-            cell.textLabel?.text = titlesArray[indexPath.row]
-            cell.detailTextLabel?.text = descriptionsArray[indexPath.row]
-        }
-        else {
-            
-        }
-        
-        
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row was selected!")
-        
-        if let moviepagevc = storyboard?.instantiateViewController(identifier: "moviepagevc") as? MoviePageViewController {
-                    print("lol")
-            moviepagevc.imageURL = imagesURLArray[indexPath.row + 1]
-            moviepagevc.movieName = titlesArray[indexPath.row + 1]
-            
-        self.navigationController?.pushViewController(moviepagevc, animated: true)
-        
-        }
-        self.tableView.reloadData()
-    }
-    
     func configureScreen() {
-       
-        numberOfRowsInSection = movieSearchResponse.results.capacity
-        print("movieSearchResponse.results.capacity: ", movieSearchResponse.results.capacity)
-        print(movieSearchResponse.searchType)
-            //print(movieSearchResponse.expression)
-        //    print(movieSearchResponse.errorMessage)
-        movieSearchResponse.results.forEach { results in
-        //  print(results.description)
-        //  print(results.id)
-        //  print(results.image)
-            print(results.title)
-        }
         
-        movieSearchResponse.results.forEach { results in
-            imagesURLArray.append(results.image)
-            titlesArray.append(results.title)
-            descriptionsArray.append(results.description)
-        }
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+
     }
     
-    private func getData(url: String) -> Response { let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
+    private func getData(url: String?) {
+        guard let url = url else {
+            print("ERROR!")
+            let alert = UIAlertController(title: "Alert", message: "Try another title", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: { data, response, error in
             
             guard let data = data, error == nil else {
-                print("Something went wrong")
+                print("JSON Parsing error!")
                 return
             }
             
-            var result: Response?
+            self.moviesArray.removeAll()
+            
+            var movieResults: MovieResults?
+            
             do {
-                result = try JSONDecoder().decode(Response.self, from: data)
-                self.movieSearchResponse = result!
+                movieResults = try JSONDecoder().decode(MovieResults.self, from: data)
                 self.configureScreen()
             }
             catch {
                 print(String(describing: error))
             }
             
+            guard let finalMovieResults = movieResults else {
+                return
+            }
             
+            let newMovies = finalMovieResults.Search
+            self.moviesArray.append(contentsOf: newMovies)
             
-//            let json = result!
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             
-        
-         
-        
-            
-//            print(json.results)
-//            print(json.expression)
-//            print(json.searchType)
-//            json.results.forEach { results in print(results.id)
-//                print(results.resultType)
-//                print(results.image)
-//                print(results.title)
-//            }
-//
-//            print(json.results.description)
-//
         })
-        
         task.resume()
-        
-        return movieSearchResponse
     }
-    
-    
 }
 
 
+/* SearchResultsViewController tableView extension */
+extension SearchResultsViewController {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return moviesArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.imageView?.layer.cornerRadius = 10
+        if (tableView.hasRowAtIndexPath(indexPath: indexPath)) {
+            cell.imageView?.kf.setImage(with: URL(string: moviesArray[indexPath.row].Poster!))
+            cell.textLabel?.text = moviesArray[indexPath.row].Title
+            cell.detailTextLabel?.text = moviesArray[indexPath.row].Year
+        }
+        else {
+            cell.textLabel?.text = "Error"
+            cell.detailTextLabel?.text = "Error"
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let moviepagevc = storyboard?.instantiateViewController(identifier: "moviepagevc") as? MoviePageViewController {
+                    print("moviepagevc was downloaded")
+            
+            moviepagevc.movieName = moviesArray[indexPath.row].Title
+            moviepagevc.imageURL = moviesArray[indexPath.row].Poster!
+            
+            self.navigationController?.pushViewController(moviepagevc, animated: true)
+        
+        }
+        self.tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+
+}
+
+extension UITableView {
+    func hasRowAtIndexPath(indexPath: IndexPath) -> Bool {
+        return indexPath.section < self.numberOfSections && indexPath.row < self.numberOfRows(inSection: indexPath.section)
+    }
+}
