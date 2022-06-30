@@ -112,7 +112,6 @@
 				C25FD9A6280B6D3C00100B8A /* Assets.xcassets */,
 				C25FD9A8280B6D3C00100B8A /* LaunchScreen.storyboard */,
 				C25FD9AB280B6D3C00100B8A /* Info.plist */,
-				C2D315AF284FFFA60002A641 /* MovieTableViewCell.swift */,
 			);
 			path = MoviesReviewer;
 			sourceTree = "<group>";
@@ -129,6 +128,7 @@
 		C25FD9B9280CD43400100B8A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C2D315AF284FFFA60002A641 /* MovieTableViewCell.swift */,
 				C25FD9B6280CD2C600100B8A /* Movie.swift */,
 				C2BDC5F02860CCD200613CE3 /* CustomCollectionView.swift */,
 				C209697228676C7000AF4CB4 /* CustomCollectionViewCell.swift */,

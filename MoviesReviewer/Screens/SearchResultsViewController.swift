@@ -36,6 +36,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         configureScreen()
+        self.view.backgroundColor = .black
         
         let searchMovieURL =  "https://www.omdbapi.com/?apikey=\(apiKey)&s=\(keyWord)&type=movie"
         print(searchMovieURL)

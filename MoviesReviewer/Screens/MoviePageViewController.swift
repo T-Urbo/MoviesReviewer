@@ -12,7 +12,7 @@
 import UIKit
 import Foundation
 
-class MoviePageViewController: UIViewController, SendDataToMoviePageVC {
+class MoviePageViewController: UIViewController {
     func sendData() {
         print("")
     }
@@ -25,15 +25,14 @@ class MoviePageViewController: UIViewController, SendDataToMoviePageVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMoviePage()
         
-    }
-    
-    func configureMoviePage() {
         self.title = movieName
-        moviePageBackground.kf.setImage(with: URL(string: imageURL))
         self.view.sendSubviewToBack(moviePageBackground)
-        moviePageBackground.addOverlay()
+        
+        
+        moviePageBackground.kf.setImage(with: URL(string: imageURL))
+        
+//        moviePageBackground.addOverlay()
     }
 }
 
